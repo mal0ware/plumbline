@@ -1,0 +1,9 @@
+venue,moment,markets_fetched,with_usable_price,share
+kalshi,1 days before close,3251,1606,0.494002
+kalshi,7 days before close,3251,791,0.243310
+kalshi,30 days before close,3251,490,0.150723
+polymarket,1 days before close,8600,8415,0.978488
+polymarket,7 days before close,8600,4588,0.533488
+polymarket,30 days before close,8600,2036,0.236744
+kalshi,7 days after open,3251,932,0.286681
+polymarket,7 days after open,8600,4365,0.507558

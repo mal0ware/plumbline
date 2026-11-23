@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable
+from itertools import pairwise
 from zlib import crc32
 
 import numpy as np
@@ -254,6 +255,47 @@ def category_table(obs: pd.DataFrame, n_boot: int, seed: int) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+# Lower edges of the Polymarket volume tiers, in dollars. The lowest is the floor.
+VOLUME_TIERS_USD = (100_000.0, 200_000.0, 500_000.0, 2_000_000.0)
+MIN_SPLIT_ROWS = 50
+
+
+def split_table(obs: pd.DataFrame, n_boot: int, seed: int) -> pd.DataFrame:
+    """Bias by market type on both venues, and by volume tier on Polymarket.
+
+    These two splits were chosen after the main tables had been read, to see
+    where the Polymarket deviation sits. They are exploratory.
+    """
+    rows = []
+    for venue, days, frame in _groups(obs, "before_close"):
+        parts: list[tuple[str, str, pd.DataFrame]] = [
+            ("market type", "yes or no", frame[frame["yes_no"]]),
+            ("market type", "two named sides", frame[~frame["yes_no"]]),
+        ]
+        if venue == "polymarket":
+            bounds = [*VOLUME_TIERS_USD, float("inf")]
+            for low, high in pairwise(bounds):
+                label = f"from ${low:,.0f}" + ("" if high == float("inf") else f" to ${high:,.0f}")
+                tier = frame[(frame["volume"] >= low) & (frame["volume"] < high)]
+                parts.append(("volume", label, tier))
+        for split, group, part in parts:
+            if len(part) < MIN_SPLIT_ROWS:
+                continue
+            row = _bias_row(
+                part.reset_index(drop=True), n_boot, _seed(seed, "split", venue, days, group)
+            )
+            kept = {
+                key: value
+                for key, value in row.items()
+                if key in ("markets", "events")
+                or key.startswith(("mean_gap", "mz_psi", "logit_slope"))
+            }
+            rows.append(
+                {"venue": venue, "days_before_close": days, "split": split, "group": group, **kept}
+            )
+    return pd.DataFrame(rows)
+
+
 def _cost_models(venue: str, frame: pd.DataFrame) -> list[tuple[str, Array, Array, Array | float]]:
     """(name, cost of the priced side, sale price of the priced side, fee rate)."""
     price = frame["price"].to_numpy(dtype=np.float64)
@@ -377,5 +419,6 @@ def run_all(obs: pd.DataFrame, n_boot: int, seed: int) -> dict[str, pd.DataFrame
         "brier": brier_table(obs, n_boot, seed),
         "by_category": category_table(obs, n_boot, seed),
         "edge_after_costs": edge_table(obs, n_boot, seed),
+        "splits": split_table(obs, n_boot, seed),
         "extremes": extremes_table(obs),
     }

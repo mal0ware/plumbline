@@ -1,0 +1,7 @@
+venue,days_before_close,markets,share_within_2c_of_0_or_1,share_within_5c_of_0_or_1,median_spread
+kalshi,1,1606,0.068493,0.178082,0.040000
+kalshi,7,791,0.094817,0.278129,0.040000
+kalshi,30,490,0.093878,0.297959,0.040000
+polymarket,1,8415,0.306358,0.371836,
+polymarket,7,4588,0.335004,0.429817,
+polymarket,30,2036,0.372299,0.524558,

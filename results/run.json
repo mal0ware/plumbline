@@ -1,0 +1,9 @@
+{
+  "data": "fetched",
+  "fetched_utc": "2026-11-23T20:08:01Z",
+  "first_fetched_utc": "2026-11-23T20:01:35Z",
+  "bootstrap_resamples": 2000,
+  "seed": 20261123,
+  "observations": 23223,
+  "markets": 11851
+}

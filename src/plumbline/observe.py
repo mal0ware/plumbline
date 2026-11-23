@@ -34,6 +34,7 @@ class Observation:
     bid: float
     ask: float
     fee_rate: float
+    volume: float
     outcome: int
 
 
@@ -67,6 +68,7 @@ def _observation(market: Market, quote: Quote, kind: str, days: int) -> Observat
         bid=float("nan") if quote.bid is None else quote.bid,
         ask=float("nan") if quote.ask is None else quote.ask,
         fee_rate=market.fee_rate,
+        volume=market.volume,
         outcome=market.outcome,
     )
 

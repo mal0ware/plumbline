@@ -1,0 +1,241 @@
+venue,days_before_close,cost_model,side,price_bin,markets,mean_cost,edge,edge_low,edge_high,return_on_cost
+kalshi,1,"midpoint, no fee",buy priced side,0.0-0.1,329,0.045916,-0.024640,-0.039208,-0.007708,-0.536623
+kalshi,1,"midpoint, no fee",buy priced side,0.1-0.2,222,0.144279,0.026892,-0.019651,0.073872,0.186388
+kalshi,1,"midpoint, no fee",buy priced side,0.2-0.3,190,0.246289,-0.019974,-0.074881,0.042354,-0.081098
+kalshi,1,"midpoint, no fee",buy priced side,0.3-0.4,137,0.349124,0.037737,-0.049587,0.129314,0.108091
+kalshi,1,"midpoint, no fee",buy priced side,0.4-0.5,119,0.448727,-0.053769,-0.141739,0.032454,-0.119825
+kalshi,1,"midpoint, no fee",buy priced side,0.5-0.6,122,0.538238,-0.005451,-0.104584,0.084536,-0.010127
+kalshi,1,"midpoint, no fee",buy priced side,0.6-0.7,114,0.647544,0.062982,-0.021590,0.147045,0.097264
+kalshi,1,"midpoint, no fee",buy priced side,0.7-0.8,95,0.750053,-0.013211,-0.114806,0.081529,-0.017613
+kalshi,1,"midpoint, no fee",buy priced side,0.8-0.9,98,0.848199,-0.001260,-0.086289,0.065762,-0.001486
+kalshi,1,"midpoint, no fee",buy priced side,0.9-1.0,180,0.947567,0.013544,-0.016428,0.039610,0.014294
+kalshi,1,"midpoint, no fee",buy other side,0.0-0.1,329,0.954084,0.024640,0.008240,0.039131,0.025826
+kalshi,1,"midpoint, no fee",buy other side,0.1-0.2,222,0.855721,-0.026892,-0.077505,0.024443,-0.031426
+kalshi,1,"midpoint, no fee",buy other side,0.2-0.3,190,0.753711,0.019974,-0.041073,0.076827,0.026500
+kalshi,1,"midpoint, no fee",buy other side,0.3-0.4,137,0.650876,-0.037737,-0.126219,0.046087,-0.057979
+kalshi,1,"midpoint, no fee",buy other side,0.4-0.5,119,0.551273,0.053769,-0.034405,0.137921,0.097536
+kalshi,1,"midpoint, no fee",buy other side,0.5-0.6,122,0.461762,0.005451,-0.090050,0.097528,0.011804
+kalshi,1,"midpoint, no fee",buy other side,0.6-0.7,114,0.352456,-0.062982,-0.141651,0.019085,-0.178696
+kalshi,1,"midpoint, no fee",buy other side,0.7-0.8,95,0.249947,0.013211,-0.081882,0.111386,0.052853
+kalshi,1,"midpoint, no fee",buy other side,0.8-0.9,98,0.151801,0.001260,-0.070225,0.081206,0.008302
+kalshi,1,"midpoint, no fee",buy other side,0.9-1.0,180,0.052433,-0.013544,-0.038326,0.018095,-0.258317
+kalshi,1,"quoted side, with fee",buy priced side,0.0-0.1,329,0.062119,-0.044833,-0.059039,-0.028403,-0.721730
+kalshi,1,"quoted side, with fee",buy priced side,0.1-0.2,222,0.176396,-0.015311,-0.062066,0.034782,-0.086797
+kalshi,1,"quoted side, with fee",buy priced side,0.2-0.3,190,0.270474,-0.057887,-0.114826,0.004432,-0.214019
+kalshi,1,"quoted side, with fee",buy priced side,0.3-0.4,137,0.376423,-0.005783,-0.105122,0.083325,-0.015364
+kalshi,1,"quoted side, with fee",buy priced side,0.4-0.5,119,0.479134,-0.100161,-0.190650,-0.012823,-0.209046
+kalshi,1,"quoted side, with fee",buy priced side,0.5-0.6,122,0.566066,-0.048555,-0.140323,0.041670,-0.085777
+kalshi,1,"quoted side, with fee",buy priced side,0.6-0.7,114,0.678070,0.017438,-0.065472,0.097157,0.025717
+kalshi,1,"quoted side, with fee",buy priced side,0.7-0.8,95,0.781895,-0.056894,-0.158181,0.040204,-0.072765
+kalshi,1,"quoted side, with fee",buy priced side,0.8-0.9,98,0.877724,-0.038213,-0.117269,0.029073,-0.043536
+kalshi,1,"quoted side, with fee",buy priced side,0.9-1.0,180,0.963822,-0.005109,-0.036922,0.020009,-0.005301
+kalshi,1,"quoted side, with fee",buy other side,0.0-0.1,329,0.970286,0.006452,-0.010659,0.020575,0.006650
+kalshi,1,"quoted side, with fee",buy other side,0.1-0.2,222,0.887838,-0.065869,-0.119645,-0.015386,-0.074191
+kalshi,1,"quoted side, with fee",buy other side,0.2-0.3,190,0.777895,-0.016206,-0.078251,0.042517,-0.020833
+kalshi,1,"quoted side, with fee",buy other side,0.3-0.4,137,0.678175,-0.080084,-0.168766,0.003425,-0.118087
+kalshi,1,"quoted side, with fee",buy other side,0.4-0.5,119,0.581681,0.007778,-0.078875,0.096897,0.013371
+kalshi,1,"quoted side, with fee",buy other side,0.5-0.6,122,0.489590,-0.037926,-0.130209,0.052523,-0.077466
+kalshi,1,"quoted side, with fee",buy other side,0.6-0.7,114,0.382982,-0.109818,-0.187857,-0.023706,-0.286744
+kalshi,1,"quoted side, with fee",buy other side,0.7-0.8,95,0.281789,-0.032688,-0.129341,0.064109,-0.116002
+kalshi,1,"quoted side, with fee",buy other side,0.8-0.9,98,0.181327,-0.038562,-0.109796,0.044342,-0.212665
+kalshi,1,"quoted side, with fee",buy other side,0.9-1.0,180,0.068689,-0.034190,-0.060884,-0.003075,-0.497748
+kalshi,7,"midpoint, no fee",buy priced side,0.0-0.1,246,0.041720,0.007061,-0.017018,0.034850,0.169249
+kalshi,7,"midpoint, no fee",buy priced side,0.1-0.2,93,0.143952,-0.014919,-0.084581,0.071085,-0.103641
+kalshi,7,"midpoint, no fee",buy priced side,0.2-0.3,58,0.249767,0.008853,-0.105610,0.132451,0.035447
+kalshi,7,"midpoint, no fee",buy priced side,0.3-0.4,52,0.350481,0.014904,-0.117818,0.154029,0.042524
+kalshi,7,"midpoint, no fee",buy priced side,0.4-0.5,32,0.449531,-0.074531,-0.235708,0.082376,-0.165798
+kalshi,7,"midpoint, no fee",buy priced side,0.5-0.6,41,0.550244,-0.086829,-0.252987,0.077158,-0.157801
+kalshi,7,"midpoint, no fee",buy priced side,0.6-0.7,55,0.650091,0.113545,-0.012556,0.232604,0.174661
+kalshi,7,"midpoint, no fee",buy priced side,0.7-0.8,43,0.755349,-0.034419,-0.173514,0.088770,-0.045567
+kalshi,7,"midpoint, no fee",buy priced side,0.8-0.9,75,0.854540,0.065460,-0.003334,0.120375,0.076603
+kalshi,7,"midpoint, no fee",buy priced side,0.9-1.0,96,0.948927,-0.001010,-0.050055,0.037715,-0.001065
+kalshi,7,"midpoint, no fee",buy other side,0.0-0.1,246,0.958280,-0.007061,-0.036029,0.016684,-0.007368
+kalshi,7,"midpoint, no fee",buy other side,0.1-0.2,93,0.856048,0.014919,-0.066782,0.087715,0.017428
+kalshi,7,"midpoint, no fee",buy other side,0.2-0.3,58,0.750233,-0.008853,-0.127711,0.101967,-0.011801
+kalshi,7,"midpoint, no fee",buy other side,0.3-0.4,52,0.649519,-0.014904,-0.157164,0.123070,-0.022946
+kalshi,7,"midpoint, no fee",buy other side,0.4-0.5,32,0.550469,0.074531,-0.097410,0.232224,0.135396
+kalshi,7,"midpoint, no fee",buy other side,0.5-0.6,41,0.449756,0.086829,-0.066937,0.250777,0.193059
+kalshi,7,"midpoint, no fee",buy other side,0.6-0.7,55,0.349909,-0.113545,-0.231073,0.011308,-0.324500
+kalshi,7,"midpoint, no fee",buy other side,0.7-0.8,43,0.244651,0.034419,-0.091390,0.169181,0.140684
+kalshi,7,"midpoint, no fee",buy other side,0.8-0.9,75,0.145460,-0.065460,-0.120992,0.008577,-0.450021
+kalshi,7,"midpoint, no fee",buy other side,0.9-1.0,96,0.051073,0.001010,-0.037792,0.049528,0.019784
+kalshi,7,"quoted side, with fee",buy priced side,0.0-0.1,246,0.058894,-0.013911,-0.039022,0.013506,-0.236206
+kalshi,7,"quoted side, with fee",buy priced side,0.1-0.2,93,0.174011,-0.054943,-0.123549,0.029612,-0.315743
+kalshi,7,"quoted side, with fee",buy priced side,0.2-0.3,58,0.278397,-0.033745,-0.150422,0.082390,-0.121212
+kalshi,7,"quoted side, with fee",buy priced side,0.3-0.4,52,0.379038,-0.030002,-0.170426,0.107792,-0.079153
+kalshi,7,"quoted side, with fee",buy priced side,0.4-0.5,32,0.479375,-0.121778,-0.289493,0.047762,-0.254035
+kalshi,7,"quoted side, with fee",buy priced side,0.5-0.6,41,0.581951,-0.135476,-0.298117,0.030866,-0.232796
+kalshi,7,"quoted side, with fee",buy priced side,0.6-0.7,55,0.677818,0.070618,-0.051789,0.195291,0.104185
+kalshi,7,"quoted side, with fee",buy priced side,0.7-0.8,43,0.782558,-0.073470,-0.213255,0.046090,-0.093885
+kalshi,7,"quoted side, with fee",buy priced side,0.8-0.9,75,0.884680,0.028279,-0.043118,0.085376,0.031966
+kalshi,7,"quoted side, with fee",buy priced side,0.9-1.0,96,0.968573,-0.022758,-0.071703,0.016355,-0.023496
+kalshi,7,"quoted side, with fee",buy other side,0.0-0.1,246,0.975455,-0.025886,-0.053436,-0.000847,-0.026537
+kalshi,7,"quoted side, with fee",buy other side,0.1-0.2,93,0.886108,-0.022123,-0.102799,0.047326,-0.024967
+kalshi,7,"quoted side, with fee",buy other side,0.2-0.3,58,0.778862,-0.049437,-0.171275,0.073091,-0.063473
+kalshi,7,"quoted side, with fee",buy other side,0.3-0.4,52,0.678077,-0.058663,-0.198709,0.076773,-0.086514
+kalshi,7,"quoted side, with fee",buy other side,0.4-0.5,32,0.580313,0.027768,-0.140814,0.189848,0.047850
+kalshi,7,"quoted side, with fee",buy other side,0.5-0.6,41,0.481463,0.037744,-0.109092,0.196597,0.078395
+kalshi,7,"quoted side, with fee",buy other side,0.6-0.7,55,0.377636,-0.157620,-0.273339,-0.036659,-0.417386
+kalshi,7,"quoted side, with fee",buy other side,0.7-0.8,43,0.271860,-0.006572,-0.133679,0.127908,-0.024176
+kalshi,7,"quoted side, with fee",buy other side,0.8-0.9,75,0.175600,-0.105653,-0.160400,-0.038114,-0.601669
+kalshi,7,"quoted side, with fee",buy other side,0.9-1.0,96,0.070719,-0.023148,-0.059600,0.020921,-0.327323
+kalshi,30,"midpoint, no fee",buy priced side,0.0-0.1,197,0.046226,-0.005617,-0.036703,0.034073,-0.121507
+kalshi,30,"midpoint, no fee",buy priced side,0.1-0.2,67,0.139313,-0.064687,-0.123175,0.010365,-0.464324
+kalshi,30,"midpoint, no fee",buy priced side,0.2-0.3,36,0.238611,-0.044167,-0.160648,0.086100,-0.185099
+kalshi,30,"midpoint, no fee",buy priced side,0.3-0.4,24,0.352500,-0.102500,-0.274453,0.093044,-0.290780
+kalshi,30,"midpoint, no fee",buy priced side,0.4-0.5,35,0.455571,-0.112714,-0.264333,0.063107,-0.247413
+kalshi,30,"midpoint, no fee",buy priced side,0.5-0.6,13,0.556154,-0.248462,-0.479340,0.082449,-0.446750
+kalshi,30,"midpoint, no fee",buy priced side,0.6-0.7,20,0.647750,-0.097750,-0.342816,0.184778,-0.150907
+kalshi,30,"midpoint, no fee",buy priced side,0.7-0.8,21,0.751190,-0.084524,-0.304763,0.108880,-0.112520
+kalshi,30,"midpoint, no fee",buy priced side,0.8-0.9,31,0.857419,0.142581,0.134443,0.152414,0.166290
+kalshi,30,"midpoint, no fee",buy priced side,0.9-1.0,46,0.946337,0.031924,-0.018511,0.061072,0.033734
+kalshi,30,"midpoint, no fee",buy other side,0.0-0.1,197,0.953774,0.005617,-0.032976,0.035256,0.005889
+kalshi,30,"midpoint, no fee",buy other side,0.1-0.2,67,0.860687,0.064687,-0.012253,0.124568,0.075157
+kalshi,30,"midpoint, no fee",buy other side,0.2-0.3,36,0.761389,0.044167,-0.089343,0.162129,0.058008
+kalshi,30,"midpoint, no fee",buy other side,0.3-0.4,24,0.647500,0.102500,-0.083675,0.272321,0.158301
+kalshi,30,"midpoint, no fee",buy other side,0.4-0.5,35,0.544429,0.112714,-0.059677,0.268400,0.207032
+kalshi,30,"midpoint, no fee",buy other side,0.5-0.6,13,0.443846,0.248462,-0.089704,0.476252,0.559792
+kalshi,30,"midpoint, no fee",buy other side,0.6-0.7,20,0.352250,0.097750,-0.186948,0.338531,0.277502
+kalshi,30,"midpoint, no fee",buy other side,0.7-0.8,21,0.248810,0.084524,-0.110721,0.287727,0.339713
+kalshi,30,"midpoint, no fee",buy other side,0.8-0.9,31,0.142581,-0.142581,-0.152242,-0.133888,-1.000000
+kalshi,30,"midpoint, no fee",buy other side,0.9-1.0,46,0.053663,-0.031924,-0.060686,0.019347,-0.594896
+kalshi,30,"quoted side, with fee",buy priced side,0.0-0.1,197,0.064939,-0.028492,-0.058604,0.006064,-0.438753
+kalshi,30,"quoted side, with fee",buy priced side,0.1-0.2,67,0.170896,-0.106096,-0.163256,-0.030156,-0.620821
+kalshi,30,"quoted side, with fee",buy priced side,0.2-0.3,36,0.265000,-0.084100,-0.201472,0.053436,-0.317359
+kalshi,30,"quoted side, with fee",buy priced side,0.3-0.4,24,0.382083,-0.148505,-0.315943,0.059090,-0.388672
+kalshi,30,"quoted side, with fee",buy priced side,0.4-0.5,35,0.483143,-0.157682,-0.314695,0.015636,-0.326368
+kalshi,30,"quoted side, with fee",buy priced side,0.5-0.6,13,0.587692,-0.296860,-0.536704,0.041717,-0.505129
+kalshi,30,"quoted side, with fee",buy priced side,0.6-0.7,20,0.671500,-0.136841,-0.386280,0.129262,-0.203784
+kalshi,30,"quoted side, with fee",buy priced side,0.7-0.8,21,0.781905,-0.127119,-0.333320,0.083018,-0.162576
+kalshi,30,"quoted side, with fee",buy priced side,0.8-0.9,31,0.888065,0.105059,0.093480,0.117584,0.118302
+kalshi,30,"quoted side, with fee",buy priced side,0.9-1.0,46,0.971870,0.004510,-0.045080,0.033372,0.004641
+kalshi,30,"quoted side, with fee",buy other side,0.0-0.1,197,0.972487,-0.014939,-0.053148,0.014662,-0.015361
+kalshi,30,"quoted side, with fee",buy other side,0.1-0.2,67,0.892269,0.026469,-0.051896,0.083338,0.029665
+kalshi,30,"quoted side, with fee",buy other side,0.2-0.3,36,0.787778,0.006158,-0.134647,0.118433,0.007817
+kalshi,30,"quoted side, with fee",buy other side,0.3-0.4,24,0.677083,0.057683,-0.143357,0.227166,0.085194
+kalshi,30,"quoted side, with fee",buy other side,0.4-0.5,35,0.572000,0.068077,-0.091502,0.233394,0.119015
+kalshi,30,"quoted side, with fee",buy other side,0.5-0.6,13,0.475385,0.199545,-0.125618,0.438017,0.419754
+kalshi,30,"quoted side, with fee",buy other side,0.6-0.7,20,0.376000,0.057691,-0.207771,0.316188,0.153435
+kalshi,30,"quoted side, with fee",buy other side,0.7-0.8,21,0.279524,0.039793,-0.154127,0.252359,0.142358
+kalshi,30,"quoted side, with fee",buy other side,0.8-0.9,31,0.173226,-0.183198,-0.195865,-0.173441,-1.057568
+kalshi,30,"quoted side, with fee",buy other side,0.9-1.0,46,0.079196,-0.062473,-0.093666,-0.007587,-0.788846
+polymarket,1,"reported price, no fee",buy priced side,0.0-0.1,3098,0.016670,0.002052,-0.002443,0.006936,0.123111
+polymarket,1,"reported price, no fee",buy priced side,0.1-0.2,532,0.147419,0.038671,0.005436,0.073294,0.262320
+polymarket,1,"reported price, no fee",buy priced side,0.2-0.3,604,0.252102,0.052534,0.017637,0.087719,0.208384
+polymarket,1,"reported price, no fee",buy priced side,0.3-0.4,639,0.352160,0.012473,-0.022391,0.049798,0.035417
+polymarket,1,"reported price, no fee",buy priced side,0.4-0.5,827,0.452545,0.033549,-0.000334,0.067621,0.074134
+polymarket,1,"reported price, no fee",buy priced side,0.5-0.6,1181,0.527624,-0.002645,-0.029960,0.027266,-0.005013
+polymarket,1,"reported price, no fee",buy priced side,0.6-0.7,441,0.649119,0.040223,-0.001289,0.083813,0.061966
+polymarket,1,"reported price, no fee",buy priced side,0.7-0.8,310,0.745242,-0.029113,-0.079116,0.020109,-0.039065
+polymarket,1,"reported price, no fee",buy priced side,0.8-0.9,240,0.844250,-0.031750,-0.083643,0.016821,-0.037607
+polymarket,1,"reported price, no fee",buy priced side,0.9-1.0,543,0.968645,-0.003635,-0.019438,0.010973,-0.003753
+polymarket,1,"reported price, no fee",buy other side,0.0-0.1,3098,0.983330,-0.002052,-0.007107,0.002425,-0.002087
+polymarket,1,"reported price, no fee",buy other side,0.1-0.2,532,0.852581,-0.038671,-0.072193,-0.007210,-0.045358
+polymarket,1,"reported price, no fee",buy other side,0.2-0.3,604,0.747898,-0.052534,-0.087978,-0.015588,-0.070242
+polymarket,1,"reported price, no fee",buy other side,0.3-0.4,639,0.647840,-0.012473,-0.049160,0.023426,-0.019253
+polymarket,1,"reported price, no fee",buy other side,0.4-0.5,827,0.547455,-0.033549,-0.066966,0.001103,-0.061282
+polymarket,1,"reported price, no fee",buy other side,0.5-0.6,1181,0.472376,0.002645,-0.025571,0.030905,0.005599
+polymarket,1,"reported price, no fee",buy other side,0.6-0.7,441,0.350881,-0.040223,-0.082352,0.003836,-0.114635
+polymarket,1,"reported price, no fee",buy other side,0.7-0.8,310,0.254758,0.029113,-0.018441,0.080432,0.114277
+polymarket,1,"reported price, no fee",buy other side,0.8-0.9,240,0.155750,0.031750,-0.016353,0.081092,0.203852
+polymarket,1,"reported price, no fee",buy other side,0.9-1.0,543,0.031355,0.003635,-0.010761,0.019172,0.115940
+polymarket,1,"reported price, top fee rate",buy priced side,0.0-0.1,3098,0.016670,0.001262,-0.003248,0.006173,0.075681
+polymarket,1,"reported price, top fee rate",buy priced side,0.1-0.2,532,0.147419,0.032430,0.001021,0.065103,0.219987
+polymarket,1,"reported price, top fee rate",buy priced side,0.2-0.3,604,0.252102,0.043147,0.008074,0.078320,0.171151
+polymarket,1,"reported price, top fee rate",buy priced side,0.3-0.4,639,0.352160,0.001104,-0.035744,0.037041,0.003136
+polymarket,1,"reported price, top fee rate",buy priced side,0.4-0.5,827,0.452545,0.021201,-0.012837,0.056455,0.046848
+polymarket,1,"reported price, top fee rate",buy priced side,0.5-0.6,1181,0.527624,-0.015057,-0.043524,0.015157,-0.028537
+polymarket,1,"reported price, top fee rate",buy priced side,0.6-0.7,441,0.649119,0.028878,-0.013154,0.074220,0.044489
+polymarket,1,"reported price, top fee rate",buy priced side,0.7-0.8,310,0.745242,-0.038569,-0.088934,0.014606,-0.051753
+polymarket,1,"reported price, top fee rate",buy priced side,0.8-0.9,240,0.844250,-0.038287,-0.091606,0.010043,-0.045350
+polymarket,1,"reported price, top fee rate",buy priced side,0.9-1.0,543,0.968645,-0.005110,-0.020200,0.008544,-0.005275
+polymarket,1,"reported price, top fee rate",buy other side,0.0-0.1,3098,0.983330,-0.002843,-0.007593,0.001728,-0.002891
+polymarket,1,"reported price, top fee rate",buy other side,0.1-0.2,532,0.852581,-0.044912,-0.076333,-0.012773,-0.052677
+polymarket,1,"reported price, top fee rate",buy other side,0.2-0.3,604,0.747898,-0.061920,-0.098697,-0.027263,-0.082793
+polymarket,1,"reported price, top fee rate",buy other side,0.3-0.4,639,0.647840,-0.023841,-0.062243,0.012508,-0.036800
+polymarket,1,"reported price, top fee rate",buy other side,0.4-0.5,827,0.547455,-0.045897,-0.080401,-0.012136,-0.083837
+polymarket,1,"reported price, top fee rate",buy other side,0.5-0.6,1181,0.472376,-0.009767,-0.037667,0.018523,-0.020677
+polymarket,1,"reported price, top fee rate",buy other side,0.6-0.7,441,0.350881,-0.051568,-0.091818,-0.007595,-0.146968
+polymarket,1,"reported price, top fee rate",buy other side,0.7-0.8,310,0.254758,0.019657,-0.031381,0.071744,0.077160
+polymarket,1,"reported price, top fee rate",buy other side,0.8-0.9,240,0.155750,0.025213,-0.023301,0.077535,0.161881
+polymarket,1,"reported price, top fee rate",buy other side,0.9-1.0,543,0.031355,0.002161,-0.012027,0.017622,0.068918
+polymarket,7,"reported price, no fee",buy priced side,0.0-0.1,2101,0.019850,0.001093,-0.004604,0.006984,0.055055
+polymarket,7,"reported price, no fee",buy priced side,0.1-0.2,371,0.142627,0.035271,-0.001748,0.075974,0.247295
+polymarket,7,"reported price, no fee",buy priced side,0.2-0.3,354,0.252480,0.061079,0.014489,0.109088,0.241916
+polymarket,7,"reported price, no fee",buy priced side,0.3-0.4,288,0.350448,0.041913,-0.014031,0.097968,0.119599
+polymarket,7,"reported price, no fee",buy priced side,0.4-0.5,381,0.452776,-0.032828,-0.083166,0.019127,-0.072504
+polymarket,7,"reported price, no fee",buy priced side,0.5-0.6,429,0.534198,0.008925,-0.039379,0.058636,0.016708
+polymarket,7,"reported price, no fee",buy priced side,0.6-0.7,193,0.650342,0.054321,-0.007668,0.118942,0.083527
+polymarket,7,"reported price, no fee",buy priced side,0.7-0.8,130,0.743635,-0.005173,-0.089422,0.078201,-0.006956
+polymarket,7,"reported price, no fee",buy priced side,0.8-0.9,117,0.844380,-0.049509,-0.131668,0.027147,-0.058633
+polymarket,7,"reported price, no fee",buy priced side,0.9-1.0,224,0.965583,0.003167,-0.019220,0.022901,0.003280
+polymarket,7,"reported price, no fee",buy other side,0.0-0.1,2101,0.980150,-0.001093,-0.007021,0.004443,-0.001115
+polymarket,7,"reported price, no fee",buy other side,0.1-0.2,371,0.857373,-0.035271,-0.072863,0.000679,-0.041138
+polymarket,7,"reported price, no fee",buy other side,0.2-0.3,354,0.747520,-0.061079,-0.109908,-0.011747,-0.081709
+polymarket,7,"reported price, no fee",buy other side,0.3-0.4,288,0.649552,-0.041913,-0.099681,0.012106,-0.064526
+polymarket,7,"reported price, no fee",buy other side,0.4-0.5,381,0.547224,0.032828,-0.016629,0.082652,0.059990
+polymarket,7,"reported price, no fee",buy other side,0.5-0.6,429,0.465802,-0.008925,-0.057136,0.037758,-0.019161
+polymarket,7,"reported price, no fee",buy other side,0.6-0.7,193,0.349658,-0.054321,-0.116828,0.011214,-0.155355
+polymarket,7,"reported price, no fee",buy other side,0.7-0.8,130,0.256365,0.005173,-0.073694,0.085441,0.020179
+polymarket,7,"reported price, no fee",buy other side,0.8-0.9,117,0.155620,0.049509,-0.025414,0.133417,0.318138
+polymarket,7,"reported price, no fee",buy other side,0.9-1.0,224,0.034417,-0.003167,-0.022426,0.019849,-0.092029
+polymarket,7,"reported price, top fee rate",buy priced side,0.0-0.1,2101,0.019850,0.000152,-0.005804,0.006404,0.007640
+polymarket,7,"reported price, top fee rate",buy priced side,0.1-0.2,371,0.142627,0.029197,-0.008385,0.066163,0.204711
+polymarket,7,"reported price, top fee rate",buy priced side,0.2-0.3,354,0.252480,0.051684,0.003981,0.101192,0.204706
+polymarket,7,"reported price, top fee rate",buy priced side,0.3-0.4,288,0.350448,0.030571,-0.023397,0.085551,0.087233
+polymarket,7,"reported price, top fee rate",buy priced side,0.4-0.5,381,0.452776,-0.045173,-0.093583,0.002990,-0.099770
+polymarket,7,"reported price, top fee rate",buy priced side,0.5-0.6,429,0.534198,-0.003465,-0.054703,0.042782,-0.006487
+polymarket,7,"reported price, top fee rate",buy priced side,0.6-0.7,193,0.650342,0.042992,-0.019999,0.109176,0.066107
+polymarket,7,"reported price, top fee rate",buy priced side,0.7-0.8,130,0.743635,-0.014666,-0.099393,0.061691,-0.019723
+polymarket,7,"reported price, top fee rate",buy priced side,0.8-0.9,117,0.844380,-0.056033,-0.144132,0.015749,-0.066360
+polymarket,7,"reported price, top fee rate",buy priced side,0.9-1.0,224,0.965583,0.001541,-0.020069,0.021820,0.001596
+polymarket,7,"reported price, top fee rate",buy other side,0.0-0.1,2101,0.980150,-0.002034,-0.007944,0.003492,-0.002075
+polymarket,7,"reported price, top fee rate",buy other side,0.1-0.2,371,0.857373,-0.041345,-0.080987,-0.005106,-0.048222
+polymarket,7,"reported price, top fee rate",buy other side,0.2-0.3,354,0.747520,-0.070474,-0.121006,-0.022010,-0.094277
+polymarket,7,"reported price, top fee rate",buy other side,0.3-0.4,288,0.649552,-0.053256,-0.111221,0.002958,-0.081988
+polymarket,7,"reported price, top fee rate",buy other side,0.4-0.5,381,0.547224,0.020483,-0.027658,0.072909,0.037430
+polymarket,7,"reported price, top fee rate",buy other side,0.5-0.6,429,0.465802,-0.021316,-0.070680,0.026249,-0.045762
+polymarket,7,"reported price, top fee rate",buy other side,0.6-0.7,193,0.349658,-0.065650,-0.126234,-0.003549,-0.187756
+polymarket,7,"reported price, top fee rate",buy other side,0.7-0.8,130,0.256365,-0.004320,-0.080986,0.075423,-0.016852
+polymarket,7,"reported price, top fee rate",buy other side,0.8-0.9,117,0.155620,0.042984,-0.031922,0.125946,0.276212
+polymarket,7,"reported price, top fee rate",buy other side,0.9-1.0,224,0.034417,-0.004794,-0.024738,0.017899,-0.139288
+polymarket,30,"reported price, no fee",buy priced side,0.0-0.1,1198,0.022917,0.001290,-0.006711,0.009817,0.056312
+polymarket,30,"reported price, no fee",buy priced side,0.1-0.2,204,0.143125,0.003934,-0.038692,0.053069,0.027485
+polymarket,30,"reported price, no fee",buy priced side,0.2-0.3,128,0.248852,-0.076977,-0.139308,-0.011492,-0.309327
+polymarket,30,"reported price, no fee",buy priced side,0.3-0.4,86,0.350186,0.033535,-0.065176,0.135855,0.095763
+polymarket,30,"reported price, no fee",buy priced side,0.4-0.5,65,0.458577,-0.058577,-0.179689,0.063671,-0.127736
+polymarket,30,"reported price, no fee",buy priced side,0.5-0.6,76,0.542632,-0.095263,-0.210056,0.016870,-0.175558
+polymarket,30,"reported price, no fee",buy priced side,0.6-0.7,56,0.651527,-0.044384,-0.176091,0.087982,-0.068123
+polymarket,30,"reported price, no fee",buy priced side,0.7-0.8,58,0.753681,-0.029543,-0.148390,0.077076,-0.039198
+polymarket,30,"reported price, no fee",buy priced side,0.8-0.9,61,0.844311,-0.024639,-0.125216,0.066411,-0.029183
+polymarket,30,"reported price, no fee",buy priced side,0.9-1.0,104,0.955115,-0.012808,-0.057912,0.026438,-0.013410
+polymarket,30,"reported price, no fee",buy other side,0.0-0.1,1198,0.977083,-0.001290,-0.010399,0.007262,-0.001321
+polymarket,30,"reported price, no fee",buy other side,0.1-0.2,204,0.856875,-0.003934,-0.051473,0.042087,-0.004591
+polymarket,30,"reported price, no fee",buy other side,0.2-0.3,128,0.751148,0.076977,0.004914,0.145231,0.102478
+polymarket,30,"reported price, no fee",buy other side,0.3-0.4,86,0.649814,-0.033535,-0.131543,0.064211,-0.051607
+polymarket,30,"reported price, no fee",buy other side,0.4-0.5,65,0.541423,0.058577,-0.064689,0.171497,0.108191
+polymarket,30,"reported price, no fee",buy other side,0.5-0.6,76,0.457368,0.095263,-0.020944,0.208759,0.208285
+polymarket,30,"reported price, no fee",buy other side,0.6-0.7,56,0.348473,0.044384,-0.084621,0.177579,0.127367
+polymarket,30,"reported price, no fee",buy other side,0.7-0.8,58,0.246319,0.029543,-0.083747,0.145281,0.119938
+polymarket,30,"reported price, no fee",buy other side,0.8-0.9,61,0.155689,0.024639,-0.064731,0.129870,0.158261
+polymarket,30,"reported price, no fee",buy other side,0.9-1.0,104,0.044885,0.012808,-0.025658,0.061060,0.285347
+polymarket,30,"reported price, top fee rate",buy priced side,0.0-0.1,1198,0.022917,0.000205,-0.008179,0.009002,0.008929
+polymarket,30,"reported price, top fee rate",buy priced side,0.1-0.2,204,0.143125,-0.002158,-0.048172,0.047836,-0.015076
+polymarket,30,"reported price, top fee rate",buy priced side,0.2-0.3,128,0.248852,-0.086283,-0.149581,-0.015989,-0.346725
+polymarket,30,"reported price, top fee rate",buy priced side,0.3-0.4,86,0.350186,0.022196,-0.081608,0.121424,0.063385
+polymarket,30,"reported price, top fee rate",buy priced side,0.4-0.5,65,0.458577,-0.070961,-0.197541,0.054315,-0.154742
+polymarket,30,"reported price, top fee rate",buy priced side,0.5-0.6,76,0.542632,-0.107620,-0.226902,0.011660,-0.198330
+polymarket,30,"reported price, top fee rate",buy priced side,0.6-0.7,56,0.651527,-0.055692,-0.179866,0.068998,-0.085479
+polymarket,30,"reported price, top fee rate",buy priced side,0.7-0.8,58,0.753681,-0.038787,-0.162454,0.071218,-0.051464
+polymarket,30,"reported price, top fee rate",buy priced side,0.8-0.9,61,0.844311,-0.031159,-0.134040,0.063949,-0.036904
+polymarket,30,"reported price, top fee rate",buy priced side,0.9-1.0,104,0.955115,-0.014918,-0.059760,0.026221,-0.015619
+polymarket,30,"reported price, top fee rate",buy other side,0.0-0.1,1198,0.977083,-0.002376,-0.010904,0.005862,-0.002432
+polymarket,30,"reported price, top fee rate",buy other side,0.1-0.2,204,0.856875,-0.010025,-0.063961,0.035205,-0.011700
+polymarket,30,"reported price, top fee rate",buy other side,0.2-0.3,128,0.751148,0.067670,-0.000925,0.130600,0.090089
+polymarket,30,"reported price, top fee rate",buy other side,0.3-0.4,86,0.649814,-0.044873,-0.152672,0.055314,-0.069056
+polymarket,30,"reported price, top fee rate",buy other side,0.4-0.5,65,0.541423,0.046193,-0.075544,0.164178,0.085317
+polymarket,30,"reported price, top fee rate",buy other side,0.5-0.6,76,0.457368,0.082906,-0.032124,0.195528,0.181267
+polymarket,30,"reported price, top fee rate",buy other side,0.6-0.7,56,0.348473,0.033076,-0.093228,0.168557,0.094917
+polymarket,30,"reported price, top fee rate",buy other side,0.7-0.8,58,0.246319,0.020299,-0.090232,0.135182,0.082408
+polymarket,30,"reported price, top fee rate",buy other side,0.8-0.9,61,0.155689,0.018120,-0.074025,0.123584,0.116386
+polymarket,30,"reported price, top fee rate",buy other side,0.9-1.0,104,0.044885,0.010697,-0.027402,0.056081,0.238324

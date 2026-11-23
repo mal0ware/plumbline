@@ -1,0 +1,13 @@
+| venue | close_year | markets_fetched | with_price_history | share_with_history |
+| --- | --- | --- | --- | --- |
+| polymarket | 2022 | 28 | 3 | 0.1071 |
+| polymarket | 2023 | 104 | 101 | 0.9712 |
+| polymarket | 2024 | 1862 | 1862 | 1.0000 |
+| polymarket | 2025 | 3600 | 3599 | 0.9997 |
+| polymarket | 2026 | 3006 | 2968 | 0.9874 |
+| kalshi | 2021 | 13 | 12 | 0.9231 |
+| kalshi | 2022 | 19 | 18 | 0.9474 |
+| kalshi | 2023 | 17 | 17 | 1.0000 |
+| kalshi | 2024 | 59 | 56 | 0.9492 |
+| kalshi | 2025 | 686 | 556 | 0.8105 |
+| kalshi | 2026 | 2457 | 2134 | 0.8685 |
