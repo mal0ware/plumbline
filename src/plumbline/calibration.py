@@ -170,7 +170,7 @@ def logistic_recalibration(
     x = logit(p)
     a, b = 0.0, 1.0
     for _ in range(iterations):
-        mu = 1.0 / (1.0 + np.exp(-(a + b * x)))
+        mu = 1.0 / (1.0 + np.exp(-np.clip(a + b * x, -35.0, 35.0)))
         g0 = float(np.sum(w * (y - mu)))
         g1 = float(np.sum(w * (y - mu) * x))
         v = w * mu * (1.0 - mu)

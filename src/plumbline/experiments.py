@@ -154,9 +154,37 @@ def bias_table(
     return pd.DataFrame(rows)
 
 
+ALL_MARKETS = "every market with a price"
+SAME_MARKETS = "markets with a price at every horizon"
+
+
+def _seen_at_every_horizon(obs: pd.DataFrame) -> pd.DataFrame:
+    """Rows of markets that have a before-close price at each horizon."""
+    before = obs[obs["kind"] == "before_close"]
+    seen = before.groupby(["venue", "market_id"])["days"].nunique()
+    full = seen[seen == before["days"].nunique()].index
+    keep = pd.MultiIndex.from_frame(before[["venue", "market_id"]]).isin(full)
+    return before[keep]
+
+
 def brier_table(obs: pd.DataFrame, n_boot: int, seed: int) -> pd.DataFrame:
-    """Brier score by venue and horizon against two naive forecasts, with its parts."""
+    """Brier score by venue and horizon against two naive forecasts, with its parts.
+
+    Longer horizons can only include longer-lived markets, so the rows for
+    different horizons hold different markets. The second sample keeps only
+    markets priced at every horizon, which makes the horizons comparable.
+    """
     rows = []
+    samples = [(ALL_MARKETS, obs), (SAME_MARKETS, _seen_at_every_horizon(obs))]
+    for sample, subset in samples:
+        rows.extend(_brier_rows(sample, subset, n_boot, seed))
+    return pd.DataFrame(rows)
+
+
+def _brier_rows(
+    sample: str, obs: pd.DataFrame, n_boot: int, seed: int
+) -> list[dict[str, float | int | str]]:
+    rows: list[dict[str, float | int | str]] = []
     for venue, days, frame in _groups(obs, "before_close"):
         p, y, codes = _xy(frame)
 
@@ -166,10 +194,11 @@ def brier_table(obs: pd.DataFrame, n_boot: int, seed: int) -> pd.DataFrame:
             return np.array([score, 1.0 - score / naive if naive > 0 else np.nan])
 
         point = scores(None)
-        low, high = _interval(scores, codes, n_boot, _seed(seed, "brier", venue, days))
+        low, high = _interval(scores, codes, n_boot, _seed(seed, "brier", sample, venue, days))
         parts = cal.brier_decomposition(p, y)
         rows.append(
             {
+                "sample": sample,
                 "venue": venue,
                 "days_before_close": days,
                 "markets": int(p.size),
@@ -189,7 +218,7 @@ def brier_table(obs: pd.DataFrame, n_boot: int, seed: int) -> pd.DataFrame:
                 "within_bin": parts.within_bin,
             }
         )
-    return pd.DataFrame(rows)
+    return rows
 
 
 def category_table(obs: pd.DataFrame, n_boot: int, seed: int) -> pd.DataFrame:

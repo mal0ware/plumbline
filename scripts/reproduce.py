@@ -74,7 +74,8 @@ def real(data: Path) -> tuple[dataset.Pairs, pd.DataFrame, pd.DataFrame, dict[st
         raise SystemExit(f"no data in {data}: run scripts/fetch_data.py first, or use --fast")
     pm_pairs, pm_funnel, pm_reach = dataset.load_polymarket(data)
     k_pairs, k_funnel, k_reach = dataset.load_kalshi(data)
-    manifest = json.loads((data / "manifest.json").read_text(encoding="utf-8"))
+    stamp = data / "manifest.json"
+    manifest = json.loads(stamp.read_text(encoding="utf-8")) if stamp.exists() else {}
     info = {"data": "fetched", **{key: str(value) for key, value in manifest.items()}}
     return (
         pm_pairs + k_pairs,

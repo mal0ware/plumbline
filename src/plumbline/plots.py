@@ -13,6 +13,7 @@ import numpy as np
 import pandas as pd
 
 from plumbline import config
+from plumbline.experiments import SAME_MARKETS
 
 INK = "#1f2933"
 ACCENT = "#b5482a"
@@ -107,7 +108,8 @@ def edge_figure(edge: pd.DataFrame, path: Path) -> None:
 
 
 def brier_figure(brier: pd.DataFrame, path: Path) -> None:
-    """Brier score by horizon, against the base-rate forecast."""
+    """Brier score by horizon on the same markets, against the base-rate forecast."""
+    brier = brier[brier["sample"] == SAME_MARKETS]
     venues = sorted(brier["venue"].unique())
     fig, ax = plt.subplots(figsize=(6.4, 4.0))
     width = 0.8 / max(len(venues), 1)
@@ -136,15 +138,16 @@ def brier_figure(brier: pd.DataFrame, path: Path) -> None:
             s=260,
             color=INK,
             zorder=3,
-            label=f"{venue}: base rate" if i == 0 else None,
+            label="base rate of the same markets" if i == 0 else None,
         )
     ax.axhline(0.25, color=INK, linewidth=0.8, linestyle="--")
-    ax.text(len(horizons) - 0.52, 0.253, "always 50%", fontsize=8, color=INK, ha="right")
+    ax.text(-0.45, 0.254, "always 50%", fontsize=8, color=INK, ha="left")
+    ax.set_ylim(0, 0.33)
     ax.set_xticks(range(len(horizons)))
     ax.set_xticklabels([f"{day} days" if day != 1 else "1 day" for day in horizons])
     ax.set_xlabel("Time before close")
     ax.set_ylabel("Brier score (lower is better)")
-    ax.legend(frameon=False, fontsize=8)
+    ax.legend(frameon=False, fontsize=8, loc="upper right", ncols=3)
     _style(ax)
     fig.tight_layout()
     fig.savefig(path, dpi=150)

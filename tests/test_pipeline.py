@@ -61,7 +61,11 @@ def test_a_planted_longshot_bias_is_recovered(tables: dict[str, pd.DataFrame]) -
 def test_prices_beat_the_base_rate_and_more_so_near_the_close(
     tables: dict[str, pd.DataFrame],
 ) -> None:
-    brier = tables["brier"]
+    both = tables["brier"]
+    assert set(both["sample"]) == {experiments.ALL_MARKETS, experiments.SAME_MARKETS}
+    same = both[both["sample"] == experiments.SAME_MARKETS]
+    assert same.groupby("venue")["markets"].nunique().eq(1).all()
+    brier = both[both["sample"] == experiments.ALL_MARKETS]
     for venue in ("fair", "biased"):
         scores = [_row(brier, venue, days)["brier"] for days in (1, 7, 30)]
         assert scores[0] < scores[1] < scores[2] < 0.25

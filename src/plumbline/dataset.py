@@ -143,15 +143,3 @@ def _reach_frame(venue: str, reach: dict[int, list[int]]) -> pd.DataFrame:
             "share_with_history",
         ],
     )
-
-
-def polymarket_listing_reach(data: Path) -> pd.DataFrame:
-    """Listed Polymarket markets per close year, before any sampling."""
-    counts: dict[int, int] = {}
-    for record in collect.load_polymarket_records(data):
-        market = polymarket.parse_market(record)
-        if market is not None:
-            counts[_year(market.close_ts)] = counts.get(_year(market.close_ts), 0) + 1
-    return pd.DataFrame(
-        [{"close_year": year, "markets_listed": n} for year, n in sorted(counts.items())]
-    )
