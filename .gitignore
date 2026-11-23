@@ -22,3 +22,6 @@ Thumbs.db
 
 # secrets
 .env
+
+# output of reproduce.py --fast
+results_fast/
