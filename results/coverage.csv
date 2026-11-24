@@ -1,9 +1,13 @@
 venue,moment,markets_fetched,with_usable_price,share
-kalshi,1 days before close,3251,1606,0.494002
-kalshi,7 days before close,3251,791,0.243310
-kalshi,30 days before close,3251,490,0.150723
+kalshi,1 days before close,13224,6210,0.469601
+kalshi,7 days before close,13224,3705,0.280172
+kalshi,30 days before close,13224,2352,0.177858
 polymarket,1 days before close,8600,8415,0.978488
 polymarket,7 days before close,8600,4588,0.533488
 polymarket,30 days before close,8600,2036,0.236744
-kalshi,7 days after open,3251,932,0.286681
+polymarket-nofloor,1 days before close,8608,8433,0.979670
+polymarket-nofloor,7 days before close,8608,3187,0.370237
+polymarket-nofloor,30 days before close,8608,922,0.107110
+kalshi,7 days after open,13224,4505,0.340668
 polymarket,7 days after open,8600,4365,0.507558
+polymarket-nofloor,7 days after open,8608,3057,0.355135

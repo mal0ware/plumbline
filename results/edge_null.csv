@@ -1,0 +1,5 @@
+sample,null,tests,intervals_above_zero,expected_under_null,null_95th_percentile,share_of_simulations_with_at_least_as_many,tests_with_p_null_below_0.025,smallest_p_holm,tests_with_p_holm_below_0.05,simulations
+prices from 5c to 95c,one draw per cluster,120,3,0.818000,3.000000,0.054295,5,0.323968,0,10000
+prices from 5c to 95c,one draw per market,120,3,0.693700,2.000000,0.032197,5,0.323968,0,10000
+all prices,one draw per cluster,120,3,0.781800,2.000000,0.048895,5,0.311969,0,10000
+all prices,one draw per market,120,3,0.652300,2.000000,0.030597,5,0.311969,0,10000

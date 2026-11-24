@@ -1,10 +1,14 @@
 | venue | moment | markets_fetched | with_usable_price | share |
 | --- | --- | --- | --- | --- |
-| kalshi | 1 days before close | 3251 | 1606 | 0.4940 |
-| kalshi | 7 days before close | 3251 | 791 | 0.2433 |
-| kalshi | 30 days before close | 3251 | 490 | 0.1507 |
+| kalshi | 1 days before close | 13224 | 6210 | 0.4696 |
+| kalshi | 7 days before close | 13224 | 3705 | 0.2802 |
+| kalshi | 30 days before close | 13224 | 2352 | 0.1779 |
 | polymarket | 1 days before close | 8600 | 8415 | 0.9785 |
 | polymarket | 7 days before close | 8600 | 4588 | 0.5335 |
 | polymarket | 30 days before close | 8600 | 2036 | 0.2367 |
-| kalshi | 7 days after open | 3251 | 932 | 0.2867 |
+| polymarket-nofloor | 1 days before close | 8608 | 8433 | 0.9797 |
+| polymarket-nofloor | 7 days before close | 8608 | 3187 | 0.3702 |
+| polymarket-nofloor | 30 days before close | 8608 | 922 | 0.1071 |
+| kalshi | 7 days after open | 13224 | 4505 | 0.3407 |
 | polymarket | 7 days after open | 8600 | 4365 | 0.5076 |
+| polymarket-nofloor | 7 days after open | 8608 | 3057 | 0.3551 |
