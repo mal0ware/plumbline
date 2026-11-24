@@ -44,11 +44,14 @@ def simulate_markets(
     markets_per_event: int = 2,
     spread: float = 0.0,
     fee_rate: float = 0.0,
+    events_per_series: int = 0,
 ) -> list[tuple[Market, list[Quote]]]:
     """Simulate ``n_events`` events, each with correlated markets and daily quotes.
 
     Markets in one event share half of their Brownian increments, so their
-    outcomes are correlated and the event is the right unit to resample.
+    outcomes are correlated and the event is the right unit to resample. With
+    ``events_per_series`` above zero, that many events in a row are labelled as
+    one series, as on a venue sampled by series.
     """
     rng = np.random.default_rng(seed)
     pairs: list[tuple[Market, list[Quote]]] = []
@@ -89,6 +92,7 @@ def simulate_markets(
                 volume=1_000_000.0,
                 yes_no=True,
                 fee_rate=fee_rate,
+                series=f"{venue}-s{event // events_per_series}" if events_per_series else "",
             )
             pairs.append((market, quotes))
     return pairs

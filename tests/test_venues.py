@@ -133,6 +133,7 @@ def test_kalshi_market_is_parsed() -> None:
     assert market is not None
     assert market.outcome == 0 and market.category == "economics"
     assert market.cluster == "k-KXFED-26SEP"
+    assert market.series == "k-KXFED"
     assert market.volume == pytest.approx(398151.88)
     assert market.fee_rate == pytest.approx(0.07)
     half = kalshi.parse_market(_kalshi(result="yes"), {"fee_multiplier": 0.5})

@@ -6,6 +6,9 @@ that settled later. Two rules keep the pairing honest:
 1. Only a market with a settled outcome of 0 or 1 produces an observation.
 2. The price is the latest quote at or before the chosen moment, and no older
    than a staleness limit. A quote from after that moment is never used.
+
+``cluster`` is the market's event. ``unit`` is what the bootstrap resamples:
+the series where the sample was drawn by series, the event otherwise.
 """
 
 from __future__ import annotations
@@ -24,6 +27,7 @@ class Observation:
     venue: str
     market_id: str
     cluster: str
+    unit: str
     category: str
     yes_no: bool
     kind: str
@@ -58,6 +62,7 @@ def _observation(market: Market, quote: Quote, kind: str, days: int) -> Observat
         venue=market.venue,
         market_id=market.market_id,
         cluster=market.cluster,
+        unit=market.series or market.cluster,
         category=market.category,
         yes_no=market.yes_no,
         kind=kind,

@@ -163,19 +163,31 @@ def parse_history(payload: Any) -> list[Quote]:
 
 
 def iter_closed_markets(
-    client: PoliteClient, *, end_min: str, end_max: str, min_volume: float
+    client: PoliteClient,
+    *,
+    end_min: str,
+    end_max: str,
+    min_volume: float,
+    start_max: str | None = None,
 ) -> Iterator[dict[str, Any]]:
-    """Yield slim records for closed markets whose scheduled end is in a window."""
+    """Yield slim records for closed markets whose scheduled end is in a window.
+
+    A ``min_volume`` of zero sends no volume filter at all. ``start_max`` keeps
+    only markets that started at or before that time.
+    """
     cursor: str | None = None
     while True:
         params = {
             "closed": "true",
             "limit": "100",
-            "volume_num_min": str(int(min_volume)),
             "end_date_min": end_min,
             "end_date_max": end_max,
             "include_tag": "true",
         }
+        if min_volume > 0:
+            params["volume_num_min"] = str(int(min_volume))
+        if start_max:
+            params["start_date_max"] = start_max
         if cursor:
             params["after_cursor"] = cursor
         page = client.get_json(f"{GAMMA}/markets/keyset?{urlencode(params)}")

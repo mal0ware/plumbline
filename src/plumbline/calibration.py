@@ -223,6 +223,44 @@ def cluster_bootstrap(
     return np.vstack(draws)
 
 
+def cluster_wilson(
+    wins: Array, rows: Array, clusters: Array, squares: Array, z: float = 1.959964
+) -> tuple[Array, Array]:
+    """Wilson score interval for a win rate, with the sample size cut for clustering.
+
+    ``wins`` of ``rows`` markets won, in ``clusters`` clusters. ``squares`` is
+    the sum over clusters of (wins_c - rate * rows_c)^2, which gives the
+    cluster-robust variance of the rate,
+
+        V = clusters / (clusters - 1) * squares / rows^2 .
+
+    The design effect is V over the binomial variance rate (1 - rate) / rows,
+    never taken below 1, and the Wilson interval is computed with rows divided
+    by it. When every market won or every market lost, the variance says
+    nothing about clustering, so each cluster is counted as one observation.
+    Unlike a bootstrap, this never returns an interval of zero width.
+
+    Inputs broadcast against each other. Empty bins return NaN.
+    """
+    wins, rows, clusters, squares = np.broadcast_arrays(
+        *(np.asarray(a, dtype=np.float64) for a in (wins, rows, clusters, squares))
+    )
+    with np.errstate(invalid="ignore", divide="ignore"):
+        rate = wins / rows
+        binomial = rate * (1.0 - rate) / rows
+        robust = clusters / (clusters - 1.0) * squares / rows**2
+        effect = np.where(binomial > 0, np.maximum(robust / binomial, 1.0), np.nan)
+        effective = np.where(binomial > 0, rows / effect, clusters)
+        effective = np.where(clusters <= 1, 1.0, effective)
+        effective = np.clip(effective, 1.0, None)
+        scale = 1.0 + z * z / effective
+        centre = (rate + z * z / (2.0 * effective)) / scale
+        half = z * np.sqrt(rate * (1.0 - rate) / effective + z * z / (4.0 * effective**2)) / scale
+    low = np.where(rows > 0, np.clip(centre - half, 0.0, 1.0), np.nan)
+    high = np.where(rows > 0, np.clip(centre + half, 0.0, 1.0), np.nan)
+    return np.asarray(low, dtype=np.float64), np.asarray(high, dtype=np.float64)
+
+
 def percentile_interval(draws: Array, level: float = 0.95) -> tuple[Array, Array]:
     """Percentile interval of each column of bootstrap draws, ignoring NaN."""
     tail = (1.0 - level) / 2.0

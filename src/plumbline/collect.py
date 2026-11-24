@@ -8,10 +8,12 @@ from __future__ import annotations
 
 import json
 import os
+from calendar import monthrange
 from collections.abc import Callable, Iterable, Iterator
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
+from zlib import crc32
 
 import numpy as np
 
@@ -104,16 +106,18 @@ def fetch_polymarket_markets(data: Path, client: PoliteClient, log: Log) -> None
         log(f"polymarket markets {path.stem}: {len(rows)}")
 
 
-def load_polymarket_records(data: Path) -> list[dict[str, Any]]:
+def load_polymarket_records(data: Path, folder: str = "polymarket") -> list[dict[str, Any]]:
     """Every cached Gamma record, one per market id."""
     seen: dict[str, dict[str, Any]] = {}
-    for path in sorted((data / "polymarket" / "markets").glob("*.jsonl")):
+    for path in sorted((data / folder / "markets").glob("*.jsonl")):
         for row in read_jsonl(path):
             seen[str(row["id"])] = row
     return [seen[key] for key in sorted(seen)]
 
 
-def polymarket_sample(records: list[dict[str, Any]]) -> list[str]:
+def polymarket_sample(
+    records: list[dict[str, Any]], per_month: int = config.PM_HISTORIES_PER_MONTH
+) -> list[str]:
     """The market ids whose price history is fetched.
 
     Eligible markets are binary, cleanly settled, have a CLOB token and were open
@@ -131,33 +135,83 @@ def polymarket_sample(records: list[dict[str, Any]]) -> list[str]:
         by_month.setdefault(month, []).append(market.market_id)
     chosen: list[str] = []
     for index, month in enumerate(sorted(by_month)):
-        chosen.extend(choose(by_month[month], config.PM_HISTORIES_PER_MONTH, config.SEED + index))
+        chosen.extend(choose(by_month[month], per_month, config.SEED + index))
     return sorted(chosen)
 
 
-def fetch_polymarket_histories(data: Path, client: PoliteClient, log: Log) -> None:
+def fetch_polymarket_histories(
+    data: Path,
+    client: PoliteClient,
+    log: Log,
+    folder: str = "polymarket",
+    per_month: int = config.PM_HISTORIES_PER_MONTH,
+) -> None:
     """Fetch the price history of every sampled market that is not cached yet."""
-    records = {str(r["id"]): r for r in load_polymarket_records(data)}
-    path = data / "polymarket" / "history.jsonl"
+    records = {str(r["id"]): r for r in load_polymarket_records(data, folder)}
+    path = data / folder / "history.jsonl"
     done = {str(row["id"]) for row in read_jsonl(path)}
     todo = [
         market_id
-        for market_id in polymarket_sample(list(records.values()))
+        for market_id in polymarket_sample(list(records.values()), per_month)
         if market_id not in done
     ]
-    log(f"polymarket histories: {len(done)} cached, {len(todo)} to fetch")
+    log(f"{folder} histories: {len(done)} cached, {len(todo)} to fetch")
     for count, market_id in enumerate(todo, start=1):
         token = polymarket.first_token(records[market_id])
         assert token is not None
         try:
             payload = polymarket.fetch_history(client, token)
         except HttpError as exc:
-            log(f"polymarket history {market_id}: {exc}")
+            log(f"{folder} history {market_id}: {exc}")
             continue
         quotes = polymarket.parse_history(payload)
         _append_jsonl(path, {"id": market_id, "history": [[q.ts, q.price] for q in quotes]})
         if count % 500 == 0:
-            log(f"polymarket histories: {count}/{len(todo)}")
+            log(f"{folder} histories: {count}/{len(todo)}")
+
+
+NOFLOOR = "polymarket_nofloor"
+
+
+def nofloor_days() -> list[str]:
+    """The days listed in full for the sample with no volume floor.
+
+    A seeded draw of days from each month, the same on every run.
+    """
+    days: list[str] = []
+    first, last = config.PM_NOFLOOR_FIRST_MONTH, config.PM_LAST_MONTH
+    for index, (year, month) in enumerate(months(first, last)):
+        length = monthrange(year, month)[1]
+        every = [f"{year}-{month:02d}-{day:02d}" for day in range(1, length + 1)]
+        days.extend(choose(every, config.PM_NOFLOOR_DAYS_PER_MONTH, config.SEED + 1000 + index))
+    return days
+
+
+def fetch_polymarket_nofloor_markets(data: Path, client: PoliteClient, log: Log) -> None:
+    """List every closed market that was due to end on each drawn day, at any volume.
+
+    The listing asks only for markets that started at least the minimum
+    lifetime before the end of that day, which removes most short contracts at
+    the source. The exact lifetime rule is applied when the sample is drawn.
+    """
+    for day in nofloor_days():
+        path = data / NOFLOOR / "markets" / f"{day}.jsonl"
+        if path.exists():
+            continue
+        start = datetime.strptime(day, "%Y-%m-%d").replace(tzinfo=UTC)
+        end = start + timedelta(days=1)
+        cutoff = end - timedelta(days=config.MIN_LIFETIME_DAYS)
+        rows = list(
+            polymarket.iter_closed_markets(
+                client,
+                end_min=f"{start:%Y-%m-%dT%H:%M:%SZ}",
+                end_max=f"{end:%Y-%m-%dT%H:%M:%SZ}",
+                min_volume=0.0,
+                start_max=f"{cutoff:%Y-%m-%dT%H:%M:%SZ}",
+            )
+        )
+        write_jsonl(path, rows)
+        log(f"{NOFLOOR} markets {day}: {len(rows)}")
 
 
 # -------------------------------------------------------------------- Kalshi
@@ -174,9 +228,15 @@ def fetch_kalshi_series(data: Path, client: PoliteClient, log: Log) -> None:
 
 
 def kalshi_series_sample(series: list[dict[str, Any]]) -> list[str]:
-    """A seeded random draw of series tickers."""
+    """A seeded random draw of series tickers, made in two parts.
+
+    The second part is drawn from the series the first left out, so the first
+    draw and everything fetched for it stay in the sample.
+    """
     tickers = [str(row["ticker"]) for row in series if row.get("ticker")]
-    return choose(tickers, config.KALSHI_SERIES_SAMPLED, config.SEED)
+    first = choose(tickers, config.KALSHI_SERIES_SAMPLED, config.SEED)
+    rest = sorted(set(tickers) - set(first))
+    return sorted(first + choose(rest, config.KALSHI_SERIES_ADDED, config.SEED + 1))
 
 
 def fetch_kalshi_markets(data: Path, client: PoliteClient, log: Log) -> None:
@@ -217,11 +277,18 @@ def kalshi_sample(records: list[dict[str, Any]], series: dict[str, dict[str, Any
         if market.volume < config.KALSHI_MIN_VOLUME_CONTRACTS:
             continue
         by_series.setdefault(str(record["series_ticker"]), []).append(market.market_id)
+    # Series of the first draw keep the seeds they had when they were the whole
+    # sample, so that draw is unchanged. Later series are seeded by their ticker.
+    listed = [str(ticker) for ticker in series]
+    first = set(choose(listed, config.KALSHI_SERIES_SAMPLED, config.SEED))
     chosen: list[str] = []
-    for index, ticker in enumerate(sorted(by_series)):
+    for index, ticker in enumerate(sorted(t for t in by_series if t in first)):
         chosen.extend(
             choose(by_series[ticker], config.KALSHI_MARKETS_PER_SERIES, config.SEED + index)
         )
+    for ticker in sorted(t for t in by_series if t not in first):
+        seed = config.SEED + 1 + crc32(ticker.encode()) % 1_000_000
+        chosen.extend(choose(by_series[ticker], config.KALSHI_MARKETS_PER_SERIES, seed))
     return sorted(chosen)
 
 

@@ -171,3 +171,99 @@ def test_histories_are_fetched_once_and_resumed(tmp_path: Path) -> None:
     cached = list(collect.read_jsonl(tmp_path / "polymarket" / "history.jsonl"))
     assert [row["id"] for row in cached] == ["1", "6"]
     assert sum("market=11" in url for url in net.urls) == 1
+
+
+def test_no_floor_listing_sends_no_volume_filter_and_a_start_cutoff() -> None:
+    net = FakeNet([(200, {"markets": [{"id": "1"}], "next_cursor": None})])
+    rows = list(
+        polymarket.iter_closed_markets(
+            net.client(interval=0.0), end_min="a", end_max="b", min_volume=0.0, start_max="c"
+        )
+    )
+    assert [row["id"] for row in rows] == ["1"]
+    assert "volume_num_min" not in net.urls[0] and "start_date_max=c" in net.urls[0]
+
+
+def test_no_floor_days_are_a_fixed_draw_from_every_month() -> None:
+    days = collect.nofloor_days()
+    assert days == collect.nofloor_days() and len(set(days)) == len(days)
+    listed = collect.months(config.PM_NOFLOOR_FIRST_MONTH, config.PM_LAST_MONTH)
+    assert len(days) == config.PM_NOFLOOR_DAYS_PER_MONTH * len(listed)
+    per_month: dict[str, int] = {}
+    for day in days:
+        per_month[day[:7]] = per_month.get(day[:7], 0) + 1
+    assert set(per_month.values()) == {config.PM_NOFLOOR_DAYS_PER_MONTH}
+    assert "2023-02-30" not in days and min(days) >= "2023-01-01"
+
+
+def test_no_floor_listing_is_cached_by_day(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(collect, "nofloor_days", lambda: ["2025-06-10"])
+    net = FakeNet([(200, {"markets": [{"id": "9"}], "next_cursor": None})])
+    logs: list[str] = []
+    collect.fetch_polymarket_nofloor_markets(tmp_path, net.client(interval=0.0), logs.append)
+    collect.fetch_polymarket_nofloor_markets(tmp_path, net.client(interval=0.0), logs.append)
+    assert len(net.urls) == 1
+    url = net.urls[0]
+    assert "end_date_min=2025-06-10T00%3A00%3A00Z" in url
+    assert "end_date_max=2025-06-11T00%3A00%3A00Z" in url
+    # Started at least two days before the end of the listed day.
+    assert "start_date_max=2025-06-09T00%3A00%3A00Z" in url
+    cached = collect.load_polymarket_records(tmp_path, collect.NOFLOOR)
+    assert [row["id"] for row in cached] == ["9"]
+
+
+def test_the_second_series_draw_keeps_the_first() -> None:
+    series = [{"ticker": f"S{i:05d}"} for i in range(5000)]
+    tickers = [row["ticker"] for row in series]
+    first = collect.choose(tickers, config.KALSHI_SERIES_SAMPLED, config.SEED)
+    both = collect.kalshi_series_sample(series)
+    assert set(first) <= set(both)
+    assert len(both) == len(set(both)) == config.KALSHI_SERIES_SAMPLED + config.KALSHI_SERIES_ADDED
+    assert both == collect.kalshi_series_sample(list(reversed(series)))
+
+
+def test_each_fetch_session_is_added_to_the_manifest(tmp_path: Path) -> None:
+    import importlib.util
+
+    root = Path(__file__).resolve().parents[1]
+    spec = importlib.util.spec_from_file_location("fetch_data", root / "scripts" / "fetch_data.py")
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    path = tmp_path / "manifest.json"
+    path.write_text(json.dumps({"note": "kept"}), encoding="utf-8")
+    module.record_session(path, {"requests": 3})
+    module.record_session(path, {"requests": 5})
+    manifest = json.loads(path.read_text(encoding="utf-8"))
+    assert manifest["note"] == "kept"
+    assert [session["requests"] for session in manifest["sessions"]] == [3, 5]
+
+
+def test_adding_series_does_not_change_the_markets_drawn_from_the_first_ones() -> None:
+    series = {f"S{i:05d}": {"ticker": f"S{i:05d}"} for i in range(900)}
+    first = collect.choose(list(series), config.KALSHI_SERIES_SAMPLED, config.SEED)
+    later = sorted(set(series) - set(first))[:3]
+
+    def markets(ticker: str) -> list[dict[str, Any]]:
+        return [
+            {
+                "ticker": f"{ticker}-{n:03d}",
+                "event_ticker": f"{ticker}-E{n // 4}",
+                "market_type": "binary",
+                "open_time": "2024-04-01T00:00:00Z",
+                "close_time": "2024-04-20T00:00:00Z",
+                "result": "yes",
+                "volume_fp": "5000.00",
+                "series_ticker": ticker,
+            }
+            for n in range(60)
+        ]
+
+    old = [row for ticker in first[:5] for row in markets(ticker)]
+    new = [row for ticker in later for row in markets(ticker)]
+    before = collect.kalshi_sample(old, series)
+    after = collect.kalshi_sample(old + new, series)
+    assert len(before) == 5 * config.KALSHI_MARKETS_PER_SERIES
+    assert set(before) <= set(after)
+    assert len(after) == 8 * config.KALSHI_MARKETS_PER_SERIES
+    assert after == collect.kalshi_sample(list(reversed(old + new)), series)

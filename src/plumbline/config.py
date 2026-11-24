@@ -1,4 +1,9 @@
-"""Every choice that defines the sample, fixed before any result was looked at."""
+"""Every choice that defines the samples.
+
+The first block was set in the first code commit, before the first results
+commit. The second block was added after those results had been read, in
+answer to a review of them, and everything it produces is labelled post hoc.
+"""
 
 from __future__ import annotations
 
@@ -30,3 +35,20 @@ MAX_STALENESS_HOURS = 36.0
 KALSHI_MAX_SPREAD = 0.20
 
 DAY = 86_400
+
+# ---- Added after the first results were read (post hoc) ----
+
+# Kalshi: a second seeded draw of series from those not in the first draw. The
+# two draws together are a simple random sample of series.
+KALSHI_SERIES_ADDED = 1800
+
+# Polymarket with no volume floor. Listing every closed market is not
+# practical, so a seeded draw of days is listed in full for each month.
+PM_NOFLOOR_FIRST_MONTH = (2023, 1)
+PM_NOFLOOR_DAYS_PER_MONTH = 6
+PM_NOFLOOR_HISTORIES_PER_MONTH = 300
+
+# Prices inside these bounds are called live. Outside them a market is mostly
+# decided, or dead, and adds little to a test of calibration.
+LIVE_LOW = 0.05
+LIVE_HIGH = 0.95

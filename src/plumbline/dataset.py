@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import replace
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -22,17 +23,37 @@ def _funnel_row(venue: str, step: str, count: int) -> dict[str, Any]:
     return {"venue": venue, "step": step, "markets": count}
 
 
-def load_polymarket(data: Path) -> tuple[Pairs, list[dict[str, Any]], pd.DataFrame]:
+NOFLOOR_VENUE = "polymarket-nofloor"
+
+
+def load_polymarket_nofloor(data: Path) -> tuple[Pairs, list[dict[str, Any]], pd.DataFrame]:
+    """The Polymarket sample drawn with no volume floor, under its own venue name."""
+    return load_polymarket(
+        data,
+        folder=collect.NOFLOOR,
+        venue=NOFLOOR_VENUE,
+        per_month=config.PM_NOFLOOR_HISTORIES_PER_MONTH,
+        listed="closed markets listed on the drawn days, any volume, started two days before",
+    )
+
+
+def load_polymarket(
+    data: Path,
+    folder: str = "polymarket",
+    venue: str = "polymarket",
+    per_month: int = config.PM_HISTORIES_PER_MONTH,
+    listed: str = "closed markets listed above the volume floor",
+) -> tuple[Pairs, list[dict[str, Any]], pd.DataFrame]:
     """Sampled Polymarket markets with their quotes, the selection funnel, and reach by year."""
-    records = collect.load_polymarket_records(data)
+    records = collect.load_polymarket_records(data, folder)
     parsed = [(record, polymarket.parse_market(record)) for record in records]
     binary = [(record, market) for record, market in parsed if market is not None]
     settled = [(record, market) for record, market in binary if market.outcome is not None]
     lived = [(record, market) for record, market in settled if collect.long_enough(market)]
-    sampled = set(collect.polymarket_sample(records))
+    sampled = set(collect.polymarket_sample(records, per_month))
     histories = {
         str(row["id"]): [Quote(ts=int(t), price=float(p)) for t, p in row["history"]]
-        for row in collect.read_jsonl(data / "polymarket" / "history.jsonl")
+        for row in collect.read_jsonl(data / folder / "history.jsonl")
     }
     pairs: Pairs = []
     reach: dict[int, list[int]] = {}
@@ -43,9 +64,9 @@ def load_polymarket(data: Path) -> tuple[Pairs, list[dict[str, Any]], pd.DataFra
         counts = reach.setdefault(_year(market.close_ts), [0, 0])
         counts[0] += 1
         counts[1] += int(len(quotes) > 0)
-        pairs.append((market, quotes))
+        pairs.append((replace(market, venue=venue), quotes))
     funnel = [
-        _funnel_row("polymarket", "closed markets listed above the volume floor", len(records)),
+        _funnel_row("polymarket", listed, len(records)),
         _funnel_row("polymarket", "two outcomes, with open and close times", len(binary)),
         _funnel_row(
             "polymarket", "not settled cleanly to one side (excluded)", len(binary) - len(settled)
@@ -62,7 +83,9 @@ def load_polymarket(data: Path) -> tuple[Pairs, list[dict[str, Any]], pd.DataFra
             "polymarket", "fetched, history empty", sum(1 for _, quotes in pairs if not quotes)
         ),
     ]
-    return pairs, funnel, _reach_frame("polymarket", reach)
+    for row in funnel:
+        row["venue"] = venue
+    return pairs, funnel, _reach_frame(venue, reach)
 
 
 def load_kalshi(data: Path) -> tuple[Pairs, list[dict[str, Any]], pd.DataFrame]:
@@ -143,3 +166,41 @@ def _reach_frame(venue: str, reach: dict[int, list[int]]) -> pd.DataFrame:
             "share_with_history",
         ],
     )
+
+
+def _day(ts: int) -> str:
+    return datetime.fromtimestamp(ts, tz=UTC).strftime("%Y-%m-%d")
+
+
+def sample_dates(pairs: Pairs) -> pd.DataFrame:
+    """Per venue: the first and last close among fetched markets, and the earliest price."""
+    spans: dict[str, list[int]] = {}
+    for market, quotes in pairs:
+        span = spans.setdefault(market.venue, [market.close_ts, market.close_ts, 2**62])
+        span[0] = min(span[0], market.close_ts)
+        span[1] = max(span[1], market.close_ts)
+        if quotes:
+            span[2] = min(span[2], quotes[0].ts)
+    rows = [
+        {
+            "venue": venue,
+            "first_close": _day(span[0]),
+            "last_close": _day(span[1]),
+            "earliest_price": _day(span[2]) if span[2] < 2**62 else "",
+        }
+        for venue, span in sorted(spans.items())
+    ]
+    return pd.DataFrame(rows, columns=["venue", "first_close", "last_close", "earliest_price"])
+
+
+def kalshi_fee_terms(data: Path) -> pd.DataFrame:
+    """How many listed Kalshi series carry each fee type and fee multiplier."""
+    counts: dict[tuple[str, str], int] = {}
+    for row in collect.read_jsonl(data / "kalshi" / "series.jsonl"):
+        key = (str(row.get("fee_type")), str(row.get("fee_multiplier")))
+        counts[key] = counts.get(key, 0) + 1
+    rows = [
+        {"fee_type": fee_type, "fee_multiplier": multiplier, "series": count}
+        for (fee_type, multiplier), count in sorted(counts.items())
+    ]
+    return pd.DataFrame(rows, columns=["fee_type", "fee_multiplier", "series"])

@@ -130,6 +130,7 @@ def parse_market(record: dict[str, Any], series: dict[str, Any]) -> Market | Non
         volume=float(record.get("volume_fp") or 0.0),
         yes_no=True,
         fee_rate=TAKER_COEFFICIENT * float(1.0 if multiplier is None else multiplier),
+        series=f"k-{record['series_ticker']}" if record.get("series_ticker") else "",
     )
 
 

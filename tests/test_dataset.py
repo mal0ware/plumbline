@@ -135,5 +135,40 @@ def test_observations_from_the_cache(cache: Path) -> None:
     assert by_venue["kalshi"].price == pytest.approx(0.72)
     assert by_venue["kalshi"].ask == pytest.approx(0.74)
     assert by_venue["kalshi"].fee_rate == pytest.approx(0.07)
+    # Kalshi is resampled by series, Polymarket by event.
+    assert by_venue["kalshi"].unit == "k-S" and by_venue["kalshi"].cluster == "k-EV-1"
+    assert by_venue["polymarket"].unit == by_venue["polymarket"].cluster == "pm-7"
     # The split market and the one with a one-sided book never appear.
     assert set(table["market_id"]) == {"1", "S-A"}
+
+
+def test_the_no_floor_sample_loads_under_its_own_name(cache: Path) -> None:
+    collect.write_jsonl(
+        cache / collect.NOFLOOR / "markets" / "2024-04-19.jsonl",
+        [_pm(11, volumeNum=40.0), _pm(12, volumeNum=0.0, outcomePrices='["0", "1"]')],
+    )
+    close = parse_time("2024-04-20T00:00:00Z")
+    assert close is not None
+    collect.write_jsonl(
+        cache / collect.NOFLOOR / "history.jsonl",
+        [{"id": "11", "history": [[close - 8 * DAY, 0.3]]}, {"id": "12", "history": []}],
+    )
+    pairs, funnel, reach = dataset.load_polymarket_nofloor(cache)
+    assert {market.venue for market, _ in pairs} == {dataset.NOFLOOR_VENUE}
+    assert {row["venue"] for row in funnel} == {dataset.NOFLOOR_VENUE}
+    assert sorted(market.volume for market, _ in pairs) == [0.0, 40.0]
+    assert reach["venue"].tolist() == [dataset.NOFLOOR_VENUE]
+    table = observe.build_table(pairs)
+    assert table["market_id"].tolist() == ["11"] and table["price"].tolist() == [0.3]
+
+
+def test_sample_dates_and_fee_terms(cache: Path) -> None:
+    pm_pairs, _, _ = dataset.load_polymarket(cache)
+    k_pairs, _, _ = dataset.load_kalshi(cache)
+    dates = dataset.sample_dates(pm_pairs + k_pairs).set_index("venue")
+    assert dates.loc["polymarket", "first_close"] == "2024-04-20"
+    assert dates.loc["polymarket", "earliest_price"] == "2024-04-12"
+    assert dates.loc["kalshi", "last_close"] == "2024-04-20"
+    terms = dataset.kalshi_fee_terms(cache)
+    assert int(terms["series"].sum()) == 2
+    assert dataset.kalshi_fee_terms(cache / "missing").empty

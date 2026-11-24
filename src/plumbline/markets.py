@@ -14,7 +14,9 @@ class Market:
 
     ``outcome`` is 1 if the priced side won, 0 if it lost, and ``None`` if the
     market has not settled cleanly to one side (still open, cancelled, split).
-    Only markets with an outcome of 0 or 1 are ever scored.
+    Only markets with an outcome of 0 or 1 are ever scored. ``cluster`` is the
+    event the market belongs to. ``series`` is a coarser group, set where the
+    sample was drawn by series, and empty otherwise.
     """
 
     venue: str
@@ -28,6 +30,7 @@ class Market:
     volume: float
     yes_no: bool
     fee_rate: float
+    series: str = ""
 
 
 @dataclass(frozen=True)
